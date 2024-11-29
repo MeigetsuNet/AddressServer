@@ -19,7 +19,7 @@ export default class AddressManager {
         return Object.keys(this.AddressRecords[Prefecture]);
     }
     public GetAddresses(Prefecture: string, City: string): string[] | null {
-        if (this.AddressRecords[Prefecture] == null) return null;
+        if (this.AddressRecords[Prefecture] == null || this.AddressRecords[Prefecture][City] == null) return null;
         return this.AddressRecords[Prefecture][City];
     }
 }
