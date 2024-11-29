@@ -19,6 +19,10 @@ describe('AddressManager', () => {
         (readJson as jest.Mock).mockReturnValue(mockAddressData);
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('should return all prefectures', () => {
         const manager = new AddressManager();
         const prefectures = manager.GetPrefectures();
