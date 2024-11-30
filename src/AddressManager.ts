@@ -3,13 +3,13 @@ import { readJson } from 'nodeeasyfileio';
 type AddressCache = {
     [prefecture: string]: {
         [city: string]: string[];
-    }[];
+    };
 };
 
 export default class AddressManager {
     constructor(private AddressFilePath: string = './system/addresses.json') {}
-    private get AddressRecords(): AddressCache[] {
-        return readJson<AddressCache[]>(this.AddressFilePath);
+    private get AddressRecords(): AddressCache {
+        return readJson<AddressCache>(this.AddressFilePath);
     }
     public GetPrefectures(): string[] {
         return Object.keys(this.AddressRecords);
