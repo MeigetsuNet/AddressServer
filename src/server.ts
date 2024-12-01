@@ -30,4 +30,6 @@ app.get('/postcode/:postcode', (req, res) => {
     else res.json(PostCodeInformation);
 });
 
+app.use(express.static('wwwroot'));
+
 export default app;

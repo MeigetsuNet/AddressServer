@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>住所検索サービス</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css"
+            integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.0/swagger-ui.min.css"
+            integrity="sha512-zgNkkBA79Tg3XpwFZuTEhdzXjBNszFu2Cx6wjCyiHw+/jJQLVOISBgr5BEploydVZzoEZKedpYjg8P4eB2hATA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+            integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link rel="stylesheet" href="./css/api_reference.css" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+            integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js"
+            integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.0/swagger-ui-bundle.js"
+            integrity="sha512-509ntrAuJpQ0nCaxuHEN3KSI9Yrpjgsyp0xVpI5u4aWagh1KdJgF0Fm3pLXZil6mWt85a4Gn6GYbOR5Fxgs8lg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.0/swagger-ui-standalone-preset.js"
+            integrity="sha512-gjd8uXEhsjw/dAksYuCfJYMlbqQekKyEyza22AF+XdFT4zL18+DMem+qpO2Y2bECnTSRmZzN8RqXZc5dteHoIA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script defer src="./js/swagger.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h3>住所検索サービス</h3>
+            </div>
+        </header>
+        <main>
+            <div id="description" class="container">
+                <p>このサービスは、日本の住所の一覧を検索することができるサービスです。</p>
+                <p>取得できるのは次の通りです。</p>
+                <ul>
+                    <li>都道府県の一覧</li>
+                    <li>指定された都道府県に存在する市区町村</li>
+                    <li>指定された都道府県・市区町村に存在する町名等</li>
+                </ul>
+            </div>
+            <div id="swagger-ui" class="container"></div>
+        </main>
+    </body>
+</html>

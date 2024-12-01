@@ -1,0 +1,170 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Meigetsu Address Search API",
+        "version": "1.0.0",
+        "license": {
+            "name": "Meigetsu Software License",
+            "url": "https://license.meigetsu.jp/?id=8E0FD277CF064D878DEC794C7C987BE8"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://address.meigetsu.jp/",
+            "description": "Main Server"
+        }
+    ],
+    "paths": {
+        "/address": {
+            "get": {
+                "summary": "Get All Prefectures",
+                "responses": {
+                    "200": {
+                        "description": "A list of all prefectures(Kanji)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "prefectures": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/address/{prefecture}": {
+            "get": {
+                "summary": "Get All Cities in a Prefecture",
+                "parameters": [
+                    {
+                        "name": "prefecture(Kanji)",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of all cities in the specified prefecture",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cities": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The specified prefecture was not found"
+                    }
+                }
+            }
+        },
+        "/address/{prefecture}/{city}": {
+            "get": {
+                "summary": "Get All Towns in a City",
+                "parameters": [
+                    {
+                        "name": "prefecture(Kanji)",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "city(Kanji)",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of all towns in the specified city",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "towns": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The specified pair of prefecture and city was not found"
+                    }
+                }
+            }
+        },
+        "/postcode/{postcode}": {
+            "get": {
+                "summary": "Get Address by Postcode",
+                "parameters": [
+                    {
+                        "name": "postcode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "^[0-9]{7}$"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The address corresponding to the specified postcode",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "prefecture": {
+                                            "type": "string"
+                                        },
+                                        "city": {
+                                            "type": "string"
+                                        },
+                                        "town": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The specified postcode was not found"
+                    }
+                }
+            }
+        }
+    }
+}
