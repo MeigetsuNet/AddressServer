@@ -21,28 +21,25 @@ type PostCodeCache = {
 
 export default class PostCodeManager {
     constructor(private PostCodeFilePath: string = './system/postcode.json') {}
-    private PostCodeFileDataJson: PostCodeFileDataBaseObjectJson = { postcodes: [] };
-    private ReadPostCodeFileData() {
-        const Record =
-            this.PostCodeFileDataJson.postcodes.length === 0
-                ? readJson<PostCodeFileDataBaseObjectJson>(this.PostCodeFilePath)
-                : this.PostCodeFileDataJson;
-        if (process.env.MG_MEMORY_SAVE_MODE !== 'true') this.PostCodeFileDataJson = Record;
-        return Record;
-    }
+    private PostCodeFileDataJson: PostCodeCache[] = [];
     private get PostCodeRecords(): PostCodeCache[] {
-        const PostCodeFileDataJson = this.ReadPostCodeFileData();
-        return PostCodeFileDataJson.postcodes
-            .map((i: PostCodeFileDataBaseObject): PostCodeCache => {
-                return {
-                    textPostCode: i.postcode,
-                    postcode: parseInt(i.postcode),
-                    prefecture: i.prefecture,
-                    city: i.city,
-                    address: i.address,
-                };
-            })
-            .sort((a: PostCodeCache, b: PostCodeCache) => a.postcode - b.postcode);
+        const Record =
+            this.PostCodeFileDataJson.length === 0
+                ? readJson<PostCodeFileDataBaseObjectJson>(this.PostCodeFilePath)
+                      .postcodes.map((i: PostCodeFileDataBaseObject): PostCodeCache => {
+                          return {
+                              textPostCode: i.postcode,
+                              postcode: parseInt(i.postcode),
+                              prefecture: i.prefecture,
+                              city: i.city,
+                              address: i.address,
+                          };
+                      })
+                      .sort((a: PostCodeCache, b: PostCodeCache) => a.postcode - b.postcode)
+                : this.PostCodeFileDataJson;
+        if (this.PostCodeFileDataJson.length === 0 && process.env.MG_MEMORY_SAVE_MODE !== 'true')
+            this.PostCodeFileDataJson = Record;
+        return Record;
     }
     private InternalGetPostCodeInformation(
         PostCode: number,
