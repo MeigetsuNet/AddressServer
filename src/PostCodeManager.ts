@@ -1,41 +1,35 @@
 import { readJson } from 'nodeeasyfileio';
 
-type PostCodeFileDataBaseObject = {
-    postcode: string;
+type PostCodeLinkedInformation = {
     prefecture: string;
     city: string;
     address?: string;
+};
+
+type PostCodeInformation<PostCodeDataType> = PostCodeLinkedInformation & {
+    postcode: PostCodeDataType;
 };
 
 type PostCodeFileDataBaseObjectJson = {
-    postcodes: PostCodeFileDataBaseObject[];
-};
-
-type PostCodeCache = {
-    textPostCode: string;
-    postcode: number;
-    prefecture: string;
-    city: string;
-    address?: string;
+    postcodes: PostCodeInformation<string>[];
 };
 
 export default class PostCodeManager {
     constructor(private PostCodeFilePath: string = './system/postcode.json') {}
-    private PostCodeFileDataJson: PostCodeCache[] = [];
-    private get PostCodeRecords(): PostCodeCache[] {
+    private PostCodeFileDataJson: PostCodeInformation<number>[] = [];
+    private get PostCodeRecords(): PostCodeInformation<number>[] {
         const Record =
             this.PostCodeFileDataJson.length === 0
                 ? readJson<PostCodeFileDataBaseObjectJson>(this.PostCodeFilePath)
-                      .postcodes.map((i: PostCodeFileDataBaseObject): PostCodeCache => {
+                      .postcodes.map((i: PostCodeInformation<string>): PostCodeInformation<number> => {
                           return {
-                              textPostCode: i.postcode,
                               postcode: parseInt(i.postcode),
                               prefecture: i.prefecture,
                               city: i.city,
                               address: i.address,
                           };
                       })
-                      .sort((a: PostCodeCache, b: PostCodeCache) => a.postcode - b.postcode)
+                      .sort((a: PostCodeInformation<number>, b: PostCodeInformation<number>) => a.postcode - b.postcode)
                 : this.PostCodeFileDataJson;
         if (this.PostCodeFileDataJson.length === 0 && process.env.MG_MEMORY_SAVE_MODE !== 'true')
             this.PostCodeFileDataJson = Record;
@@ -44,17 +38,15 @@ export default class PostCodeManager {
     private InternalGetPostCodeInformation(
         PostCode: number,
         range: { begin: number; end: number }
-    ): PostCodeFileDataBaseObject | null {
-        const CreateReturn = (Data: PostCodeCache | undefined): PostCodeFileDataBaseObject | null => {
+    ): PostCodeLinkedInformation | null {
+        const CreateReturn = (Data: PostCodeInformation<number> | undefined): PostCodeLinkedInformation | null => {
             if (Data == null) return null;
             return Data.address == null
                 ? {
-                      postcode: Data.textPostCode,
                       prefecture: Data.prefecture,
                       city: Data.city,
                   }
                 : {
-                      postcode: Data.textPostCode,
                       prefecture: Data.prefecture,
                       city: Data.city,
                       address: Data.address,
@@ -76,10 +68,16 @@ export default class PostCodeManager {
                     : this.InternalGetPostCodeInformation(PostCode, { begin: range.begin, end: Center - 1 });
         }
     }
-    public GetPostCodeInformation(PostCode: string) {
-        return this.InternalGetPostCodeInformation(parseInt(PostCode), {
+    public GetPostCodeInformation(PostCode: string): PostCodeInformation<string> | null {
+        const Result = this.InternalGetPostCodeInformation(parseInt(PostCode), {
             begin: 0,
             end: this.PostCodeRecords.length - 1,
         });
+        return Result == null
+            ? null
+            : {
+                  ...Result,
+                  postcode: PostCode,
+              };
     }
 }
