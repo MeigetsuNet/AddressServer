@@ -146,13 +146,17 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "postcode": {
+                                            "type": "string",
+                                            "format": "^[0-9]{7}$"
+                                        },
                                         "prefecture": {
                                             "type": "string"
                                         },
                                         "city": {
                                             "type": "string"
                                         },
-                                        "town": {
+                                        "address": {
                                             "type": "string"
                                         }
                                     }
