@@ -9,16 +9,14 @@ type AddressCache = {
 export default class AddressManager {
     constructor(private AddressFilePath: string = './system/addresses.json') {}
     private AddressCacheData: AddressCache = {};
-    private ReadAddressCacheData() {
+    private get AddressRecords(): AddressCache {
         const Record =
             Object.keys(this.AddressCacheData).length === 0
                 ? readJson<AddressCache>(this.AddressFilePath)
                 : this.AddressCacheData;
-        if (process.env.MG_MEMORY_SAVE_MODE !== 'true') this.AddressCacheData = Record;
+        if (Object.keys(this.AddressCacheData).length === 0 && process.env.MG_MEMORY_SAVE_MODE !== 'true')
+            this.AddressCacheData = Record;
         return Record;
-    }
-    private get AddressRecords(): AddressCache {
-        return readJson<AddressCache>(this.AddressFilePath);
     }
     public GetPrefectures(): string[] {
         return Object.keys(this.AddressRecords);
