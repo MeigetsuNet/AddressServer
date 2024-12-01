@@ -21,8 +21,16 @@ type PostCodeCache = {
 
 export default class PostCodeManager {
     constructor(private PostCodeFilePath: string = './system/postcode.json') {}
+    private PostCodeFileDataJson: PostCodeFileDataBaseObjectJson = { postcodes: [] };
+    private ReadPostCodeFileData() {
+        const Record = this.PostCodeFileDataJson.postcodes.length === 0
+            ? readJson<PostCodeFileDataBaseObjectJson>(this.PostCodeFilePath)
+            : this.PostCodeFileDataJson;
+        if (process.env.MG_MEMORY_SAVE_MODE !== 'true') this.PostCodeFileDataJson = Record;
+        return Record;
+    }
     private get PostCodeRecords(): PostCodeCache[] {
-        const PostCodeFileDataJson = readJson<PostCodeFileDataBaseObjectJson>(this.PostCodeFilePath);
+        const PostCodeFileDataJson = this.ReadPostCodeFileData();
         return PostCodeFileDataJson.postcodes
             .map((i: PostCodeFileDataBaseObject): PostCodeCache => {
                 return {
