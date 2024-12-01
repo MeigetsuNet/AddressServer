@@ -23,9 +23,10 @@ export default class PostCodeManager {
     constructor(private PostCodeFilePath: string = './system/postcode.json') {}
     private PostCodeFileDataJson: PostCodeFileDataBaseObjectJson = { postcodes: [] };
     private ReadPostCodeFileData() {
-        const Record = this.PostCodeFileDataJson.postcodes.length === 0
-            ? readJson<PostCodeFileDataBaseObjectJson>(this.PostCodeFilePath)
-            : this.PostCodeFileDataJson;
+        const Record =
+            this.PostCodeFileDataJson.postcodes.length === 0
+                ? readJson<PostCodeFileDataBaseObjectJson>(this.PostCodeFilePath)
+                : this.PostCodeFileDataJson;
         if (process.env.MG_MEMORY_SAVE_MODE !== 'true') this.PostCodeFileDataJson = Record;
         return Record;
     }

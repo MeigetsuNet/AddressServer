@@ -7,12 +7,12 @@ describe('AddressManager', () => {
     const mockAddressData = {
         Tokyo: {
             Shibuya: ['Address1', 'Address2'],
-            Shinjuku: ['Address3', 'Address4']
+            Shinjuku: ['Address3', 'Address4'],
         },
         Osaka: {
             Namba: ['Address5', 'Address6'],
-            Umeda: ['Address7', 'Address8']
-        }
+            Umeda: ['Address7', 'Address8'],
+        },
     };
 
     beforeEach(() => {

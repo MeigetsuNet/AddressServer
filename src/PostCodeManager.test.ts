@@ -32,7 +32,7 @@ describe('PostCodeManager', () => {
                     city: 'End City',
                     address: 'End Address',
                 },
-            ]
+            ],
         };
         (readJson as jest.Mock).mockReturnValue(mockPostCodeData);
     });
